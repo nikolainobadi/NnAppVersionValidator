@@ -33,42 +33,11 @@ extension LocalVersionNumberLoader: VersionNumberLoader {
             throw VersionValidationError.missingDeviceVersionString
         }
 
-        return try DeviceVersionMapper.map(deviceVersionString)
-    }
-}
-
-enum DeviceVersionMapper {
-    static func map(_ versionString: String) throws -> VersionNumber {
-        let noDecimals = removeDecimals(from: versionString)
-        let array = noDecimals.compactMap { Int($0) }
-        
-        guard array.count == noDecimals.count else {
-            throw VersionValidationError.missingNumber
-        }
-        
-        return makeVersionNumber(from: array)
+        return try VersionNumberMapper.map(deviceVersionString)
     }
 }
 
 
-// MARK: - Private Methods
-private extension DeviceVersionMapper {
-    static func removeDecimals(from string: String) -> [String] {
-        string.components(separatedBy: ".")
-    }
-    
-    static func makeVersionNumber(from array: [Int]) -> VersionNumber {
-        VersionNumber(majorNum: getNumber(.major, in: array),
-                      minorNum: getNumber(.minor, in: array),
-                      patchNum: getNumber(.patch, in: array))
-    }
-    
-    static func getNumber(_ numtype: VersionNumberType, in array: [Int]) -> Int {
-        let index = numtype.rawValue
-        
-        return array.count > index ? array[index] : 0
-    }
-}
 
 public enum VersionNumberType: Int {
     case major, minor, patch
@@ -108,7 +77,7 @@ extension RemoteVersionNumberLoader: VersionNumberLoader {
             throw VersionValidationError.missingDeviceVersionString
         }
         
-        return try DeviceVersionMapper.map(versionString)
+        return try VersionNumberMapper.map(versionString)
     }
 }
 

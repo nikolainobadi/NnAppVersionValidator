@@ -75,5 +75,5 @@ let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bund
 
 ```
 
-## Lisence
+## License
 `NnVersionValidator` is available under the MIT license. See the LICENSE file for more information.

@@ -14,15 +14,7 @@ public protocol NnVersionValidator {
     func checkIfVersionUpateIsRequired() async throws -> Bool
 }
 
-struct VersionNumber: Equatable {
-    let majorNum: Int
-    let minorNum: Int
-    let patchNum: Int
-    
-    var fullVersionNumber: String {
-        "\(majorNum).\(minorNum).\(patchNum)"
-    }
-}
+
 
 final class LocalVersionNumberLoader {
     private let infoDictonary: [String: Any]?

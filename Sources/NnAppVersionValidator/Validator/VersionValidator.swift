@@ -28,6 +28,13 @@ extension VersionValidator: NnVersionValidator {
         
         return updateRequired(deviceVersion: deviceVersion, onlineVersion: onlineVersion)
     }
+    
+    func getAppVersionNumbers() async throws -> AppVersionNumberComparison {
+        let deviceVersion = try await local.loadVersionNumber()
+        let onlineVersion = try await remote.loadVersionNumber()
+        
+        return (deviceVersion, onlineVersion)
+    }
 }
 
 

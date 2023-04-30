@@ -99,6 +99,20 @@ extension NnAppVersionValidatorTests {
 }
 
 
+// MARK: - Fetching VersionNumbers
+extension NnAppVersionValidatorTests {
+    func test_getAppVersionNumbers() async throws {
+        let deviceVersion = makeVersionNumber(1, 0, 0)
+        let onlineVersion = makeVersionNumber(2, 0, 0)
+        let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .minor)
+        let comparison = try await sut.getAppVersionNumbers()
+        
+        XCTAssertEqual(comparison.deviceVersion, deviceVersion)
+        XCTAssertEqual(comparison.appStoreVersion, onlineVersion)
+    }
+}
+
+
 // MARK: - SUT
 extension NnAppVersionValidatorTests {
     func makeSUT(deviceVersion: VersionNumber? = nil, onlineVersion: VersionNumber? = nil, selectedVersionNumber: VersionNumberType = .major, throwLocalError: Bool = false, throwRemoteError: Bool = false) -> VersionValidator {

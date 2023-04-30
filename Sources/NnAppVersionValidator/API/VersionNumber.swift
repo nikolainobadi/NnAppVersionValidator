@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct VersionNumber: Equatable {
-    let majorNum: Int
-    let minorNum: Int
-    let patchNum: Int
-    
+public struct VersionNumber: Equatable {
+    public let majorNum: Int
+    public let minorNum: Int
+    public let patchNum: Int
+}
+
+public extension VersionNumber {
     var fullVersionNumber: String {
         "\(majorNum).\(minorNum).\(patchNum)"
     }

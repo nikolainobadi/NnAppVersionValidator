@@ -25,15 +25,52 @@ extension RemoteVersionNumberLoader: VersionNumberLoader {
             throw VersionValidationError.invalidBundleId
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url)
-        
-        guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-              let results = json["results"] as? [[String: Any]],
-              let versionString = results.first?["results"] as? String
-        else {
-            throw VersionValidationError.missingDeviceVersionString
+        if #available(macOS 12.0, *) {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                  let results = json["results"] as? [[String: Any]],
+                  let versionString = results.first?["results"] as? String
+            else {
+                throw VersionValidationError.missingDeviceVersionString
+            }
+            
+            return try VersionNumberMapper.map(versionString)
+        } else {
+            // Fallback on earlier versions
+            return try await alertnateFetchVersionNumber(url: url)
         }
-        
-        return try VersionNumberMapper.map(versionString)
+    }
+}
+
+
+// MARK: - Private
+private extension RemoteVersionNumberLoader {
+    func alertnateFetchVersionNumber(url: URL) async throws -> VersionNumber {
+        return try await withCheckedThrowingContinuation({ continuation in
+            URLSession.shared.dataTask(with: url) { (data, _, error) in
+                guard let data = data, error == nil else { return continuation.resume(throwing: VersionValidationError.unableToFetchVersionFromAppStore) }
+                
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                          let results = json["results"] as? [[String: Any]],
+                          let versionString = results.first?["results"] as? String
+                    else {
+                        return continuation.resume(throwing: VersionValidationError.missingDeviceVersionString)
+                    }
+                    
+                    let versionNumber = try VersionNumberMapper.map(versionString)
+                    
+                    return continuation.resume(returning: versionNumber)
+                } catch {
+                    if let validationError = error as? VersionValidationError {
+                        return continuation.resume(throwing: validationError)
+                    } else {
+                        return continuation.resume(throwing: VersionValidationError.unableToFetchVersionFromAppStore)
+                    }
+                }
+            }
+        })
+
     }
 }

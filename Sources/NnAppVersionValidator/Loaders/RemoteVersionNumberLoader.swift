@@ -30,7 +30,7 @@ extension RemoteVersionNumberLoader: VersionNumberLoader {
             
             guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                   let results = json["results"] as? [[String: Any]],
-                  let versionString = results.first?["results"] as? String
+                  let versionString = results.first?["version"] as? String
             else {
                 throw VersionValidationError.missingDeviceVersionString
             }

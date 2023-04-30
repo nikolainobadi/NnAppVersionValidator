@@ -75,5 +75,36 @@ let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bund
 
 ```
 
+And if you would rather compare the `VersionNumber`s yourself, you can use `getAppVersionNumbers`, which will return a pair of `VersionNumber`'s via the `AppVersionNumberComparison` typealias.
+
+```
+public struct VersionNumber: Equatable {
+    public let majorNum: Int
+    public let minorNum: Int
+    public let patchNum: Int
+}
+
+public extension VersionNumber {
+    var fullVersionNumber: String {
+        "\(majorNum).\(minorNum).\(patchNum)"
+    }
+}
+```
+
+
+```
+ let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bundleId: bundleId)
+ 
+ do { 
+    let comparison = try await versionValidator.getAppVersionNumbers()
+    let deviceVersion = comparison.deviceVersion
+    let appStoreVersion = comparison.appStoreVersion
+
+    // compare the version numbers and handle result
+ } catch { 
+    // handle error
+ }
+```
+
 ## License
 `NnVersionValidator` is available under the MIT license. See the LICENSE file for more information.

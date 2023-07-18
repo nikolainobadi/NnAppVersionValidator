@@ -25,7 +25,7 @@ To add the `NnVersionValidator` source files manually to your project, follow th
 ### Adding as a Dependency for another Swift Package
 To use `NnVersionValidator` as a dependency to your Swift package. Add the following to your Package.swift file:
 
-```
+```swift
 dependencies: [
     .package(url: "https://github.com/nikolainobadi/NnAppVersionValidator", from: "1.0.0"),
 ]
@@ -33,7 +33,7 @@ dependencies: [
 ## Usage
 Here's an example of how to use NnVersionValidator:
 
-```
+```swift
 import NnVersionValidator
 
 // Get the app's Info.plist dictionary
@@ -63,7 +63,7 @@ You can also specify which type of update to check by passing a `VersionNumberTy
 - .minor: returns true if the first or second number in the version number has changed
 - .patch: returns true if any number in the version number has changed
 
-```
+```swift
 // Check for a major update
 let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bundleId: bundleId, selectedVersionNumber: .major)
 
@@ -77,7 +77,7 @@ let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bund
 
 And if you would rather compare the `VersionNumber`s yourself, you can use `getAppVersionNumbers`, which will return a pair of `VersionNumber`'s via the `AppVersionNumberComparison` typealias.
 
-```
+```swift
 public struct VersionNumber: Equatable {
     public let majorNum: Int
     public let minorNum: Int
@@ -92,7 +92,7 @@ public extension VersionNumber {
 ```
 
 
-```
+```swift
  let versionValidator = makeVersionValidator(infoDictionary: infoDictionary, bundleId: bundleId)
  
  do { 

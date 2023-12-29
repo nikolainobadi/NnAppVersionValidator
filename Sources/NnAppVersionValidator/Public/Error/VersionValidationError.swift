@@ -7,6 +7,17 @@
 
 import Foundation
 
+/// Enumerates errors that can occur during the version validation process.
+///
+/// This enum provides a set of possible errors that can be encountered when validating app versions,
+/// such as issues with the version number, bundle ID, or network errors while fetching information from the App Store.
+///
+/// - Cases:
+///   - missingNumber: Indicates a missing component in the version number. This typically occurs due to a decoding error.
+///   - invalidBundleId: Signifies that the bundle ID is invalid or was not provided.
+///   - missingDeviceVersionString: Occurs when the app's version number cannot be decoded, either from the device or from Apple's App Store.
+///   - unableToFetchVersionFromAppStore: Represents a network error that occurred while attempting to fetch the version number from Apple's App Store.
+///
 public enum VersionValidationError: Error {
     case missingNumber
     case invalidBundleId
@@ -15,9 +26,15 @@ public enum VersionValidationError: Error {
 }
 
 public extension VersionValidationError {
+    /// Provides a user-friendly description of the version validation error.
+    ///
+    /// This computed property returns a string message detailing the nature of the error encountered.
+    /// The message aids in understanding the error for debugging or user feedback purposes.
+    ///
+    /// - Returns: A string describing the error.
     var message: String {
         switch self {
-        case .missingNumber: 
+        case .missingNumber:
             return "A number is missing from the version number, most likely due to a decoding error"
         case .invalidBundleId:
             return "The bundleId is not valid or was not provided"
@@ -28,3 +45,4 @@ public extension VersionValidationError {
         }
     }
 }
+

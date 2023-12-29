@@ -3,7 +3,7 @@ import XCTest
 
 final class NnAppVersionValidatorTests: XCTestCase {
     func test_checkIfVersionUpateIsRequired_noUpdateRequired() async throws {
-        let updateRequired = try await makeSUT().checkIfVersionUpateIsRequired()
+        let updateRequired = try await makeSUT().checkIfVersionUpdateIsRequired()
         
         XCTAssertFalse(updateRequired)
     }
@@ -15,7 +15,7 @@ extension NnAppVersionValidatorTests {
     func test_checkIfVersionUpateIsRequired_checkingForMajor_patchChanged_noUpdateRequired() async throws {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 0, 1)
-        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpateIsRequired()
+        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpdateIsRequired()
         
         XCTAssertFalse(updateRequired)
     }
@@ -23,7 +23,7 @@ extension NnAppVersionValidatorTests {
     func test_checkIfVersionUpateIsRequired_checkingForMajor_minorChanged_noUpdateRequired() async throws {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 1, 1)
-        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpateIsRequired()
+        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpdateIsRequired()
         
         XCTAssertFalse(updateRequired)
     }
@@ -31,7 +31,7 @@ extension NnAppVersionValidatorTests {
     func test_checkIfVersionUpateIsRequired_checkingForMajor_majorChanged_updateRequired() async throws {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(2, 0, 0)
-        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpateIsRequired()
+        let updateRequired = try await makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion).checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }
@@ -43,7 +43,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 0, 1)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .minor)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertFalse(updateRequired)
     }
@@ -52,7 +52,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 1, 1)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .minor)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }
@@ -61,7 +61,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(2, 0, 0)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .minor)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }
@@ -74,7 +74,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 0, 1)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .patch)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }
@@ -83,7 +83,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(1, 1, 1)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .patch)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }
@@ -92,7 +92,7 @@ extension NnAppVersionValidatorTests {
         let deviceVersion = makeVersionNumber(1, 0, 0)
         let onlineVersion = makeVersionNumber(2, 0, 0)
         let sut = makeSUT(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: .minor)
-        let updateRequired = try await sut.checkIfVersionUpateIsRequired()
+        let updateRequired = try await sut.checkIfVersionUpdateIsRequired()
         
         XCTAssertTrue(updateRequired)
     }

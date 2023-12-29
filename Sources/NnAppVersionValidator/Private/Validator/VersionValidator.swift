@@ -22,7 +22,7 @@ internal final class VersionValidator {
 
 // MARK: - Validator
 extension VersionValidator: NnVersionValidator {
-    func checkIfVersionUpateIsRequired() async throws -> Bool {
+    func checkIfVersionUpdateIsRequired() async throws -> Bool {
         let deviceVersion = try await local.loadVersionNumber()
         let onlineVersion = try await remote.loadVersionNumber()
         

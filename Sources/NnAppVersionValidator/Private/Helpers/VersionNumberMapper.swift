@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum VersionNumberMapper {
+internal enum VersionNumberMapper {
     static func map(_ versionString: String) throws -> VersionNumber {
         let noDecimals = versionString.components(separatedBy: ".")
         let array = noDecimals.compactMap { Int($0) }

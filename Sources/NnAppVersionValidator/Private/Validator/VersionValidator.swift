@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class VersionValidator {
+internal final class VersionValidator {
     private let local: VersionNumberLoader
     private let remote: VersionNumberLoader
     private let selectedVersionNumber: VersionNumberType
@@ -55,6 +55,6 @@ private extension VersionValidator {
 
 
 // MARK: - Dependencies
-protocol VersionNumberLoader {
+internal protocol VersionNumberLoader {
     func loadVersionNumber() async throws -> VersionNumber
 }

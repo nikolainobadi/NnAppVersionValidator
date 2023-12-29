@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LocalVersionNumberLoader {
+internal final class LocalVersionNumberLoader {
     private let infoDictonary: [String: Any]?
     private let versionStringId = "CFBundleShortVersionString"
     

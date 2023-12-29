@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RemoteVersionNumberLoader {
+internal final class RemoteVersionNumberLoader {
     private let bundleId: String?
     
     public init(bundleId: String?) {
@@ -71,6 +71,5 @@ private extension RemoteVersionNumberLoader {
                 }
             }
         })
-
     }
 }

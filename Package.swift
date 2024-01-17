@@ -12,6 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "NnAppVersionValidator",
+            type: .dynamic,
             targets: ["NnAppVersionValidator"]),
     ],
     dependencies: [

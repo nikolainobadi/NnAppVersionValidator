@@ -46,4 +46,3 @@ public func makeVersionValidator(infoDictionary: [String: Any]?, bundleId: Strin
 public func makeVersionValidator(info: VersionValidationInfo) -> NnVersionValidator {
     return makeVersionValidator(infoDictionary: info.infoDictionary, bundleId: info.bundleId, selectedVersionNumber: info.selectedVersionNumber)
 }
-

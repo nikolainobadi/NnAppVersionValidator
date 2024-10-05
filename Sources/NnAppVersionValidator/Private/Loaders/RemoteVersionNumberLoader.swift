@@ -47,9 +47,11 @@ extension RemoteVersionNumberLoader: VersionNumberLoader {
 // MARK: - Private
 private extension RemoteVersionNumberLoader {
     func alertnateFetchVersionNumber(url: URL) async throws -> VersionNumber {
-        return try await withCheckedThrowingContinuation({ continuation in
+        return try await withCheckedThrowingContinuation { continuation in
             URLSession.shared.dataTask(with: url) { (data, _, error) in
-                guard let data = data, error == nil else { return continuation.resume(throwing: VersionValidationError.unableToFetchVersionFromAppStore) }
+                guard let data = data, error == nil else {
+                    return continuation.resume(throwing: VersionValidationError.unableToFetchVersionFromAppStore)
+                }
                 
                 do {
                     guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -70,6 +72,6 @@ private extension RemoteVersionNumberLoader {
                     }
                 }
             }
-        })
+        }
     }
 }

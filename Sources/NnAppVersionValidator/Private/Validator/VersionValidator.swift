@@ -46,9 +46,12 @@ private extension VersionValidator {
         let patchUpdate = deviceVersion.patchNum < onlineVersion.patchNum
         
         switch selectedVersionNumber {
-        case .major: return majorUpdate
-        case .minor: return majorUpdate || minorUpdate
-        case .patch: return majorUpdate || minorUpdate || patchUpdate
+        case .major: 
+            return majorUpdate
+        case .minor: 
+            return majorUpdate || minorUpdate
+        case .patch: 
+            return majorUpdate || minorUpdate || patchUpdate
         }
     }
 }

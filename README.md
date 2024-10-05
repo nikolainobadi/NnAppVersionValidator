@@ -12,7 +12,7 @@
 ### Swift Package Manager
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nikolainobadi/NnAppVersionValidator", from: "1.0.0"),
+    .package(url: "https://github.com/nikolainobadi/NnAppVersionValidator", from: "1.2.0"),
 ]
 ```
 ### Adding to an Xcode Project

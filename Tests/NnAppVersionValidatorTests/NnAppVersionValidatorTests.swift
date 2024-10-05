@@ -122,18 +122,18 @@ extension NnAppVersionValidatorTests {
         
         return VersionValidator(local: localLoader, remote: remoteLoader, selectedVersionNumber: selectedVersionNumber)
     }
+    
+    func makeVersionNumber(_ major: Int = 1, _ minor: Int = 0, _ patch: Int = 0) -> VersionNumber {
+        return .init(majorNum: major, minorNum: minor, patchNum: patch)
+    }
 }
 
 
 // MARK: - Helpers
 extension NnAppVersionValidatorTests {
-    func makeVersionNumber(_ major: Int = 1, _ minor: Int = 0, _ patch: Int = 0) -> VersionNumber {
-        return VersionNumber(majorNum: major, minorNum: minor, patchNum: patch)
-    }
-    
     class MockLoader: VersionNumberLoader {
-        let throwError: Bool
-        let versionNumber: VersionNumber
+        private let throwError: Bool
+        private let versionNumber: VersionNumber
         
         init(throwError: Bool, versionNumber: VersionNumber) {
             self.throwError = throwError

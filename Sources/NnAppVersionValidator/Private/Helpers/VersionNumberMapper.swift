@@ -24,9 +24,7 @@ internal enum VersionNumberMapper {
 // MARK: - Private
 private extension VersionNumberMapper {
     static func makeVersionNumber(from array: [Int]) -> VersionNumber {
-        VersionNumber(majorNum: getNumber(.major, in: array),
-                      minorNum: getNumber(.minor, in: array),
-                      patchNum: getNumber(.patch, in: array))
+        return .init(majorNum: getNumber(.major, in: array), minorNum: getNumber(.minor, in: array), patchNum: getNumber(.patch, in: array))
     }
     
     static func getNumber(_ numtype: VersionNumberType, in array: [Int]) -> Int {

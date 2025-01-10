@@ -14,12 +14,21 @@ final class AppUpdateInfoLoader: AppUpdateInfoProvider {
         }
         
         do {
-            let data = try await URLSession.shared.data(from: url).0
-            let decoder = JSONDecoder()
+            let (data, response) = try await URLSession.shared.data(from: url)
             
+            // Validate the HTTP response status code
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                throw VersionValidationError.invalidBundleId
+            }
+            
+            // Decode the JSON into AppUpdateInfo
+            let decoder = JSONDecoder()
             return try decoder.decode(AppUpdateInfo.self, from: data)
+        } catch let decodingError as DecodingError {
+            print("Decoding Error: \(decodingError)")
+            throw VersionValidationError.invalidBundleId
         } catch {
-            print(error.localizedDescription)
+            print("Unexpected Error: \(error)")
             throw VersionValidationError.invalidVersionInfo(url)
         }
     }

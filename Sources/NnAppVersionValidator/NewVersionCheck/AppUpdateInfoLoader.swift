@@ -19,6 +19,7 @@ final class AppUpdateInfoLoader: AppUpdateInfoProvider {
             
             return try decoder.decode(AppUpdateInfo.self, from: data)
         } catch {
+            print(error.localizedDescription)
             throw VersionValidationError.invalidVersionInfo(url)
         }
     }

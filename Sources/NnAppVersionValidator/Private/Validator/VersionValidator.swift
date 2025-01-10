@@ -26,7 +26,7 @@ extension VersionValidator: NnVersionValidator {
         let deviceVersion = try await local.loadVersionNumber()
         let onlineVersion = try await remote.loadVersionNumber()
         
-        return updateRequired(deviceVersion: deviceVersion, onlineVersion: onlineVersion)
+        return VersionComparisonHandler.updateRequired(deviceVersion: deviceVersion, onlineVersion: onlineVersion, selectedVersionNumber: selectedVersionNumber)
     }
     
     func getAppVersionNumbers() async throws -> AppVersionNumberComparison {
@@ -34,25 +34,6 @@ extension VersionValidator: NnVersionValidator {
         let onlineVersion = try await remote.loadVersionNumber()
         
         return (deviceVersion, onlineVersion)
-    }
-}
-
-
-// MARK: - Private
-private extension VersionValidator {
-    func updateRequired(deviceVersion: VersionNumber, onlineVersion: VersionNumber) -> Bool {
-        let majorUpdate = deviceVersion.majorNum < onlineVersion.majorNum
-        let minorUpdate = deviceVersion.minorNum < onlineVersion.minorNum
-        let patchUpdate = deviceVersion.patchNum < onlineVersion.patchNum
-        
-        switch selectedVersionNumber {
-        case .major: 
-            return majorUpdate
-        case .minor: 
-            return majorUpdate || minorUpdate
-        case .patch: 
-            return majorUpdate || minorUpdate || patchUpdate
-        }
     }
 }
 

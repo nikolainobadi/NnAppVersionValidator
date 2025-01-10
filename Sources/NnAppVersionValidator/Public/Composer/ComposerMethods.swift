@@ -46,3 +46,15 @@ public func makeVersionValidator(infoDictionary: [String: Any]?, bundleId: Strin
 public func makeVersionValidator(info: VersionValidationInfo) -> NnVersionValidator {
     return makeVersionValidator(infoDictionary: info.infoDictionary, bundleId: info.bundleId, selectedVersionNumber: info.selectedVersionNumber)
 }
+
+
+import Foundation
+
+public func makeAppUpdateValidationService(url: URL?, bundle: Bundle, selectedVersionNumber: VersionNumberType) -> AppUpdateValidationService {
+    return AppUpdateValidator(
+        url: url,
+        localLoader: LocalVersionNumberLoader(infoDictionary: bundle.infoDictionary),
+        infoLoader: AppUpdateInfoLoader(),
+        selectedVersionNumber: selectedVersionNumber
+    )
+}

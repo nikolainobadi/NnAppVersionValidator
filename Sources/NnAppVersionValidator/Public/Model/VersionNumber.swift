@@ -17,10 +17,16 @@ import Foundation
 ///   - minorNum: An integer representing the minor version number.
 ///   - patchNum: An integer representing the patch version number.
 ///
-public struct VersionNumber: Equatable {
+public struct VersionNumber: Equatable, Codable {
     public let majorNum: Int
     public let minorNum: Int
     public let patchNum: Int
+    
+    public init(majorNum: Int, minorNum: Int, patchNum: Int) {
+        self.majorNum = majorNum
+        self.minorNum = minorNum
+        self.patchNum = patchNum
+    }
 }
 
 public extension VersionNumber {

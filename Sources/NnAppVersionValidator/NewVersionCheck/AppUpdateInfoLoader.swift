@@ -16,11 +16,11 @@ final class AppUpdateInfoLoader: AppUpdateInfoProvider {
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             
-            // Validate the HTTP response status code
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                throw VersionValidationError.invalidBundleId
-            }
-            
+//            // Validate the HTTP response status code
+//            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+//                throw VersionValidationError.invalidBundleId
+//            }
+//            
             // Decode the JSON into AppUpdateInfo
             let decoder = JSONDecoder()
             return try decoder.decode(AppUpdateInfo.self, from: data)

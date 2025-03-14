@@ -18,7 +18,6 @@ import SwiftUI
 ///   - selectedVersionNumber: The type of version change to check for (major, minor, patch).
 ///   - updateView: A closure that returns the view to display if an update is required.
 ///
-@available(iOS 15.0, *)
 struct VersionValidatorViewModifier<UpdateView: View>: ViewModifier {
     // State variable to track whether a version update is required.
     @State private var versionUpdateRequired = false
@@ -60,7 +59,6 @@ struct VersionValidatorViewModifier<UpdateView: View>: ViewModifier {
     }
 }
 
-@available(iOS 15.0, *)
 public extension View {
     /// A view extension that applies the `VersionValidatorViewModifier` to a SwiftUI view.
     ///

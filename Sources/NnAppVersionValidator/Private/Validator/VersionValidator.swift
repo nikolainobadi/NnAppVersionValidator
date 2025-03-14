@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal final class VersionValidator {
+internal actor VersionValidator {
     private let local: VersionNumberLoader
     private let remote: VersionNumberLoader
     private let selectedVersionNumber: VersionNumberType
@@ -39,6 +39,6 @@ extension VersionValidator: NnVersionValidator {
 
 
 // MARK: - Dependencies
-internal protocol VersionNumberLoader {
+internal protocol VersionNumberLoader: Sendable {
     func loadVersionNumber() async throws -> VersionNumber
 }

@@ -106,20 +106,20 @@ extension NnAppVersionValidatorTests {
     func assertUpdateRequired(deviceVersion: VersionNumber, onlineVersion: VersionNumber, versionType: VersionNumberType, file: StaticString = #file, line: UInt = #line) async throws {
         let updateRequired = try await checkForUpdate(deviceVersion: deviceVersion, onlineVersion: onlineVersion, versionType: versionType)
         
-        XCTAssertTrue(updateRequired, "Expected update to be required", file: file, line: line)
+        XCTAssertTrue(updateRequired, "Expected update to be required")
     }
     
     func assertUpdateNotRequired(deviceVersion: VersionNumber, onlineVersion: VersionNumber, versionType: VersionNumberType, file: StaticString = #file, line: UInt = #line) async throws {
         let updateRequired = try await checkForUpdate(deviceVersion: deviceVersion, onlineVersion: onlineVersion, versionType: versionType)
         
-        XCTAssertFalse(updateRequired, "Expected update to NOT be required", file: file, line: line)
+        XCTAssertFalse(updateRequired, "Expected update to NOT be required")
     }
 }
 
 
 // MARK: - Helper Classes
 extension NnAppVersionValidatorTests {
-    class MockLoader: VersionNumberLoader {
+    class MockLoader: VersionNumberLoader, @unchecked Sendable {
         private let throwError: Bool
         private let versionNumber: VersionNumber
         

@@ -17,7 +17,6 @@ import Foundation
 ///   - minor: Represents the minor version number. Minor versions usually include smaller feature updates or substantial bug fixes.
 ///   - patch: Represents the patch number. Patches are generally used for small bug fixes or minor improvements.
 ///
-public enum VersionNumberType: Int {
+public enum VersionNumberType: Int, Sendable {
     case major, minor, patch
 }
-

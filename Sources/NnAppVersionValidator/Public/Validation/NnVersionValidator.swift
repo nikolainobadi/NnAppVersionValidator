@@ -16,7 +16,7 @@
 ///   - getAppVersionNumbers: Asynchronously retrieves the app version numbers from the device and the App Store.
 ///       - Returns: A tuple (`AppVersionNumberComparison`) containing the device's version number and the App Store's version number.
 ///
-public protocol NnVersionValidator {
+public protocol NnVersionValidator: Sendable {
     typealias AppVersionNumberComparison = (deviceVersion: VersionNumber, appStoreVersion: VersionNumber)
     
     func checkIfVersionUpdateIsRequired() async throws -> Bool

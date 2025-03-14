@@ -1,6 +1,6 @@
 //
 //  VersionNumber.swift
-//  
+//
 //
 //  Created by Nikolai Nobadi on 4/29/23.
 //
@@ -17,7 +17,7 @@ import Foundation
 ///   - minorNum: An integer representing the minor version number.
 ///   - patchNum: An integer representing the patch version number.
 ///
-public struct VersionNumber: Equatable, Codable {
+public struct VersionNumber: Equatable, Codable, Sendable {
     public let majorNum: Int
     public let minorNum: Int
     public let patchNum: Int
@@ -40,4 +40,3 @@ public extension VersionNumber {
         "\(majorNum).\(minorNum).\(patchNum)"
     }
 }
-

@@ -14,19 +14,29 @@ import Foundation
 ///
 /// The class can optionally return both the version and build number in debug mode for
 /// more detailed versioning information.
-public final class LocalVersionNumberLoader {
-    // A dictionary containing app metadata, such as version information, from the app's `Info.plist` file.
-    // This should be typically retrieved from `Bundle.main.infoDictionary`.
-    private let infoDictionary: [String: Any]?
+//public final class LocalVersionNumberLoader {
+//    // A dictionary containing app metadata, such as version information, from the app's `Info.plist` file.
+//    // This should be typically retrieved from `Bundle.main.infoDictionary`.
+//    private let infoDictionary: [String: Any]?
+//
+//    // Identifier key for fetching the app version string from `Info.plist`.
+//    private let versionStringId = "CFBundleShortVersionString"
+//    
+//    /// Initializes the loader with the app's version information.
+//    ///
+//    /// - Parameter infoDictionary: A dictionary containing metadata from the app's `Info.plist` file.
+//    public init(infoDictionary: [String: Any]?) {
+//        self.infoDictionary = infoDictionary
+//    }
+//}
 
-    // Identifier key for fetching the app version string from `Info.plist`.
-    private let versionStringId = "CFBundleShortVersionString"
+public final class LocalVersionNumberLoader {
+    private let versionNumber: String?
+    private let buildNumber: String?
     
-    /// Initializes the loader with the app's version information.
-    ///
-    /// - Parameter infoDictionary: A dictionary containing metadata from the app's `Info.plist` file.
     public init(infoDictionary: [String: Any]?) {
-        self.infoDictionary = infoDictionary
+        self.versionNumber = nil
+        self.buildNumber = nil
     }
 }
 
@@ -42,7 +52,7 @@ public extension LocalVersionNumberLoader {
     ///            "Version 1.0.0" (in release mode)
     func loadDeviceVersionDetails() -> String {
         // Attempts to retrieve the version number from the infoDictionary.
-        guard let versionNumber = infoDictionary?[versionStringId] as? String else {
+        guard let versionNumber else {
             return "" // Returns an empty string if the version number is missing.
         }
         
@@ -50,7 +60,7 @@ public extension LocalVersionNumberLoader {
         
         #if DEBUG
         // In debug mode, attempt to retrieve the build number and append it to the version string.
-        guard let buildNumber = infoDictionary?["CFBundleVersion"] as? String else {
+        guard let buildNumber else {
             return versionString
         }
         
@@ -72,11 +82,11 @@ extension LocalVersionNumberLoader: VersionNumberLoader {
     /// - Returns: A `VersionNumber` struct representing the app's semantic version number.
     func loadVersionNumber() async throws -> VersionNumber {
         // Retrieve the version string from the infoDictionary, or throw an error if not found.
-        guard let deviceVersionString = infoDictionary?[versionStringId] as? String else {
+        guard let versionNumber else {
             throw VersionValidationError.missingDeviceVersionString
         }
 
         // Maps the version string to a `VersionNumber` object using the VersionNumberMapper utility.
-        return try VersionNumberMapper.map(deviceVersionString)
+        return try VersionNumberMapper.map(versionNumber)
     }
 }
